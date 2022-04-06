@@ -1,0 +1,22 @@
+{
+  "name": "express-learning",
+  "version": "1.0.0",
+  "description": "Learning Express.js and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmiqbal19/Express-Examples.git"
+  },
+  "author": "Iqbal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmiqbal19/Express-Examples/issues"
+  },
+  "homepage": "https://github.com/kmiqbal19/Express-Examples#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
