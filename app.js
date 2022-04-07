@@ -1,21 +1,9 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-// app.get('/', (req, res) => {
-//   // res.status(200).send('Hello from the server side...');
-//   res
-//     .status(200)
-//     // .status(404)
-//     .json({ message: 'Hello from server side...', app: 'Natours' });
-// });
-// // app.post('/', (req, res) => {
-// //   res.send('You can post to this endpoint...');
-// // });
-// app.post('/', (req, res) => {
-//   res
-//     .status(200)
-//     .json({ message: 'You can post to this endpoint...', app: 'Natours' });
-// });
+// Middleware
+app.use(express.json());
+// GET
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
@@ -29,6 +17,12 @@ app.get('/api/v1/tours', (req, res) => {
     },
   });
 });
+// POST
+app.post('/api/v1/tours', (req, res) => {
+  console.log(req.body);
+  res.send('DONE!!');
+});
+// Listen to Server
 const port = 3000;
 app.listen(port, '127.0.0.1', () => {
   console.log(`App is running on port ${port}...`);
