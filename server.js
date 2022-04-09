@@ -12,27 +12,14 @@ mongoose
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true,
   })
-  .then(con => {
-    console.log(con.connections);
+  .then((con) => {
+    // console.log(con.connections);
     console.log('You have successfully logged in to MongoDB!');
   });
-const tourSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    require: [true, 'A tour name is required!']
-  },
-  price: {
-    type: Number,
-    require: [true, 'A price must be given!']
-  },
-  rating: {
-    type: Number,
-    default: 4.5
-  }
-});
-const Tour = mongoose.model('Tour', tourSchema);
+
 const app = require('./app');
 // START SERVER
 const port = process.env.PORT || 3000;
