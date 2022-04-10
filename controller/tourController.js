@@ -4,21 +4,30 @@ const Tour = require('./../models/tourModel');
 exports.getAllTours = async (req, res) => {
   try {
     // BUILD THE QUERY
-    // Filtering
+    // 1A) Filtering
     const queryObj = { ...req.query };
     const excludedFields = ['page', 'sort', 'limits', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    // Advanced Filtering
+    // 1B) Advanced Filtering
     // For mongoDB query object should be like
     // {difficulty: 'medium' , price : {$lt: 500}}
     // We got {difficulty: 'medium' , price : {lt: 500}} So the difference is the $ sign
-
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    console.log(JSON.parse(queryStr));
+
     // MongoDB Method
-    const query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr));
+
+    // 2) Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      console.log(sortBy);
+      // sort('price ratingsAverage')
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
     // EXECUTE THE QUERY
     const tours = await query;
     // Mongoose Query Methods (See doc for other methods e.g lte, gte)
