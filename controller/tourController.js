@@ -3,7 +3,20 @@ const Tour = require('./../models/tourModel');
 // ROUTE HANDLERS
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // console.log(req.query);
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limits', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+    console.log(req.query, queryObj);
+    // MongoDB Method
+    const tours = await Tour.find(queryObj);
+
+    // Mongoose Query Methods (See doc for other methods e.g lte, gte)
+    // const tours = await Tour.find()
+    //   .where('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy');
     res.status(200).json({
       status: 'success',
       results: tours.length,
