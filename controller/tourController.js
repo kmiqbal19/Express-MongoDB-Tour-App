@@ -1,5 +1,11 @@
 const Tour = require('./../models/tourModel');
-
+// Middlewares
+exports.alliasTopTours = (req, res, next) => {
+  req.query.limit = 5;
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,description,difficulty,ratingsAverage';
+  next();
+};
 // ROUTE HANDLERS
 exports.getAllTours = async (req, res) => {
   try {
@@ -22,11 +28,11 @@ exports.getAllTours = async (req, res) => {
     // 2) Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(',').join(' ');
-      console.log(sortBy);
+      // console.log(sortBy);
       // sort('price ratingsAverage')
       query = query.sort(sortBy);
     } else {
-      query = query.sort('-createdAt');
+      query = query.sort('-createdAt name');
     }
     // 3) Field Limiting
     if (req.query.fields) {
@@ -35,7 +41,20 @@ exports.getAllTours = async (req, res) => {
     } else {
       query = query.select('-__v');
     }
+    // 4) Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+
+    // console.log(typeof page, page, typeof limit, limit, typeof skip, skip);
+
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const numTours = await Tour.countDocuments();
+      if (skip >= numTours) throw new Error('This page does not exists 🥵');
+    }
     // EXECUTE THE QUERY
+    // query.find().sort().select().skip().limit() // All possible bcoz everyone returns a Mongoose Query Object. So we can chain them.
     const tours = await query;
     // Mongoose Query Methods (See doc for other methods e.g lte, gte)
     // const query = Tour.find()
