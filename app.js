@@ -24,5 +24,11 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
-
+// Error Handling for Invalid Url by using Middleware
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'FAILED',
+    message: `Couldn't find ${req.originalUrl} in this server!`
+  });
+});
 module.exports = app;

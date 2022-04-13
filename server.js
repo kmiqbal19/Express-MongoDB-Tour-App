@@ -13,9 +13,9 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
-  .then((con) => {
+  .then(con => {
     // console.log(con.connections);
     console.log('You have successfully logged in to MongoDB!');
   });
