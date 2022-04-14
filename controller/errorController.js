@@ -18,6 +18,7 @@ const handleValidationErrorDB = err => {
   return new AppError(message, 400);
 };
 const sendErrorDev = (res, err) => {
+  console.log('Sending ERROR ☠️☠️ response from development 🧩 environment 😒');
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
@@ -27,6 +28,7 @@ const sendErrorDev = (res, err) => {
 };
 const sendErrorProd = (res, err) => {
   // Operational , trusted error: send message to client
+  console.log("'Sending ERROR ☠️☠️ response from production 🪙 environment 😒'");
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -64,4 +66,5 @@ module.exports = (err, req, res, next) => {
     }
     sendErrorProd(res, error);
   }
+  next();
 };
