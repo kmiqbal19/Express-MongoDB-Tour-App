@@ -43,9 +43,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const token = signToken(user._id);
   res.status(200).json({
     status: 'success',
-    data: {
-      token
-    }
+    token: token
   });
 });
 exports.protect = catchAsync(async (req, res, next) => {
@@ -83,3 +81,15 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictedTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin', 'lead-guide'] role = 'user'
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have the permission to do this action!', 403)
+      );
+    }
+    next();
+  };
+};
