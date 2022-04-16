@@ -25,5 +25,6 @@ router
 router.post('/signup', authController.signup);
 // => LOGIN
 router.post('/login', authController.login);
-
+// => FORGOT PASSWORD
+router.post('/forgotPassword', authController.forgotPassword);
 module.exports = router;
