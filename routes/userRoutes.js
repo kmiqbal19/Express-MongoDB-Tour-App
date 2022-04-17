@@ -10,7 +10,20 @@ const {
 } = require('../controller/userController');
 
 const router = express.Router();
-
+// => SIGNUP
+router.post('/signup', authController.signup);
+// => LOGIN
+router.post('/login', authController.login);
+// => FORGOT PASSWORD
+router.post('/forgotPassword', authController.forgotPassword);
+// => RESET PASSWORD
+router.patch('/resetPassword/:token', authController.resetPassword);
+// => UPDATE PASSWORD FOR CURRENT USER
+router.patch(
+  '/updateMyPassword',
+  authController.protect,
+  authController.updatePassword
+);
 // => USERS
 router
   .route('/')
@@ -21,12 +34,5 @@ router
   .get(getUser)
   .patch(updateUsers)
   .delete(deleteUsers);
-// => SIGNUP
-router.post('/signup', authController.signup);
-// => LOGIN
-router.post('/login', authController.login);
-// => FORGOT PASSWORD
-router.post('/forgotPassword', authController.forgotPassword);
-// => RESET PASSWORD
-router.patch('/resetPassword/:token', authController.resetPassword);
+
 module.exports = router;
