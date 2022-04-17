@@ -18,8 +18,11 @@ router.patch(
   authController.protect,
   authController.updatePassword
 );
+
 // => UPDATE CURRENT USER DATA
 router.patch('/updateMe', authController.protect, userController.updateMe);
+// => DELETE USER
+router.delete('/deleteMe', authController.protect, userController.deleteMe);
 // => USERS
 router
   .route('/')
