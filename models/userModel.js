@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
-  passwordRestExpires: Date
+  passwordResetExpires: Date
 });
 // Middleware prehook
 userSchema.pre('save', async function(next) {
@@ -50,6 +50,11 @@ userSchema.pre('save', async function(next) {
   this.password = await bcryptjs.hash(this.password, 12);
   // Delete the password confirm field
   this.passwordConfirm = undefined;
+  next();
+});
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 // Schema instance method defining to check password
@@ -77,8 +82,8 @@ userSchema.methods.createPasswordResetToken = function() {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-  this.passwordRestExpires = Date.now() + 10 * 60 * 1000;
-  console.log(resetToken, this.passwordResetToken);
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  console.log(resetToken, this.passwordResetToken, this.passwordResetExpires);
   return resetToken;
 };
 const User = mongoose.model('User', userSchema);
