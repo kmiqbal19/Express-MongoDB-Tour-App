@@ -12,7 +12,7 @@ const globalErrorHandler = require('./controller/errorController');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
-// 1) GLOBAL MIDDLEWARES
+// GLOBAL MIDDLEWARES
 
 // Set Security HTTP Headers
 app.use(helmet());

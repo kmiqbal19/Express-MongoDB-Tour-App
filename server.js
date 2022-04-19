@@ -24,6 +24,7 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true
   })
+  // eslint-disable-next-line no-unused-vars
   .then(con => {
     // console.log(con.connections);
     console.log('You have successfully logged in to MongoDB!');
