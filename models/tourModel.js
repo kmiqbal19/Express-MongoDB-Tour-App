@@ -44,7 +44,7 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
       min: [1, 'Ratings must be atleast 1'],
-      max: [1, 'Ratings must be highest 5']
+      max: [5, 'Ratings cannot be more than 5']
     },
     ratingsQuantity: {
       type: Number,
@@ -83,7 +83,31 @@ const tourSchema = new mongoose.Schema(
       default: Date.now(),
       select: false
     },
-    startDates: [Date] // Array of Dates
+    startDates: [Date], // Array of Dates
+    startLocation: {
+      // GeoJSON
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point']
+      },
+      coordinates: [Number],
+      address: String,
+      description: String
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          dafault: 'Point',
+          enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+      }
+    ]
   },
   {
     toJSON: { virtuals: true },

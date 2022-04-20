@@ -1,10 +1,12 @@
 // Configure the PROCESS ENV Variables
 const fs = require('fs');
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' });
 
+dotenv.config({ path: '../../config.env' });
+// console.log(process.env.DATABASE);
 const mongoose = require('mongoose');
 const Tour = require('../../models/tourModel');
+
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
@@ -14,15 +16,13 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
-  .then((con) => {
+  .then(con => {
     console.log('You have successfully logged in to MongoDB!');
   });
 // READ JSON FILE
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 // IMPORT DATA IN DB
 const importData = async () => {
   try {
