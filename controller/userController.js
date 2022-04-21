@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -74,9 +75,4 @@ exports.updateUsers = (req, res) => {
     message: 'This response is yet not defined...'
   });
 };
-exports.deleteUsers = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This response is yet not defined...'
-  });
-};
+exports.deleteUsers = factory.deleteOne(User);
