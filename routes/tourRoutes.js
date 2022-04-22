@@ -19,7 +19,13 @@ router.use('/:tourId/reviews', reviewRouter);
 // TOUR STATS
 router.route('/tour-stats').get(tourController.getTourStats);
 // MONTHLY PLANS
-router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
+router
+  .route('/monthly-plan/:year')
+  .get(
+    authController.protect,
+    authController.restrictedTo('admin', 'lead-guide', 'guide'),
+    tourController.getMonthlyPlan
+  );
 // TOP 5 CHEAPS
 router
   .route('/top-5-cheaps')
@@ -27,13 +33,21 @@ router
 // GET ALL TOURS AND CREATE TOURS
 router
   .route('/')
-  .get(authController.protect, tourController.getAllTours)
-  .post(tourController.createTours);
+  .get(tourController.getAllTours)
+  .post(
+    authController.protect,
+    authController.restrictedTo('admin', 'lead-guide'),
+    tourController.createTours
+  );
 // GET TOURS WITH DIFFERENT QUERY AND WITH ID
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTours)
+  .patch(
+    authController.protect,
+    authController.restrictedTo('admin', 'lead-guide'),
+    tourController.updateTours
+  )
   .delete(
     authController.protect,
     authController.restrictedTo('admin', 'lead-guide'),
