@@ -23,6 +23,13 @@ router.patch(
 router.patch('/updateMe', authController.protect, userController.updateMe);
 // => DELETE USER
 router.delete('/deleteMe', authController.protect, userController.deleteMe);
+// => GET CURRENT USER
+router.get(
+  '/me',
+  authController.protect,
+  userController.getMe,
+  userController.getUser
+);
 // => USERS
 router
   .route('/')
