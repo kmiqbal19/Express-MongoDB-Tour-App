@@ -22,7 +22,8 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    autoIndex: true
   })
   // eslint-disable-next-line no-unused-vars
   .then(con => {
