@@ -30,6 +30,14 @@ router
 router
   .route('/top-5-cheaps')
   .get(tourController.alliasTopTours, tourController.getAllTours);
+// TOUR WITH GEO RADIUS
+// tours-within?distance=400&center=-40,50.23&unit=mi
+
+// tours-within/400/center/-40,50.23/mi
+
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getToursWithin);
 // GET ALL TOURS AND CREATE TOURS
 router
   .route('/')
