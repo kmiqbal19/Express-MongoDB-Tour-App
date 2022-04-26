@@ -1,2 +1,15 @@
-h1 The Park Camper
-//- <h1>The Park Camper</h1>
+doctype html
+html 
+  head 
+    title Natours | #{tour}
+    //- <link rel='stylesheet' href='css/style.css' />
+    link(rel='stylesheet' href='css/style.css')
+    link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+
+
+  body 
+    h1= tour 
+    h2= user.toUpperCase()
+    - const x = 4;
+    h3= x + 5
+    p This is some text
