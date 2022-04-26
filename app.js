@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controller/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 // VIEW ENGINE WITH PUG
@@ -61,24 +62,9 @@ app.use((req, res, next) => {
 
   next();
 });
-// BASE ROUTES
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    title: 'Exciting tours for adventurous people',
-    user: 'Iqbal'
-  });
-});
-app.get('/overview', (req, res) => {
-  res.status(200).render('overview', {
-    title: 'All Tours'
-  });
-});
-app.get('/tour', (req, res) => {
-  res.status(200).render('tour', {
-    title: 'The Forest Hiker'
-  });
-});
+
 // MOUNTING ROUTER FOR DIFFERENT ROUTES
+app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
