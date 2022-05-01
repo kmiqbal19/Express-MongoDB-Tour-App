@@ -1,17 +1,19 @@
 /* eslint-disable */
 import '@babel/polyfill';
-import { login } from './login';
+import { login, logout } from './login';
 import { displayMap } from './mapbox';
 console.log('Hello from parcel');
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
+const loginForm = document.querySelector('.login-form');
+const logOutBtn = document.querySelector('.nav__el--logout');
 // DELEGATION
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
   displayMap(locations);
 }
-const loginForm = document.querySelector('.login-form');
+
 if (loginForm) {
   loginForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -20,3 +22,4 @@ if (loginForm) {
     login(email, password);
   });
 }
+if (logOutBtn) logOutBtn.addEventListener('click', logout);
