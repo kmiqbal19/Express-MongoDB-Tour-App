@@ -60,7 +60,8 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 exports.logout = (req, res) => {
   res.cookie('jwt', 'Logged Out', {
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 5 * 1000),
+    // expires: Date.now(),
     httpOnly: true
   });
   res.status(200).json({
@@ -83,6 +84,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access', 401)
     );
   }
+
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   // console.log(decoded);

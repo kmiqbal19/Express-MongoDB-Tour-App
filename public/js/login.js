@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { showAlert } from './alert';
 export const login = async (email, password) => {
-  console.log('login');
   try {
     const res = await axios({
       method: 'POST',
@@ -26,12 +25,17 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   try {
-    console.log('From Logout');
     const res = await axios({
       method: 'GET',
       url: 'http://localhost:3000/api/v1/users/logout'
     });
-    if ((res.data.status = 'success')) location.reload(true);
+    console.log(res);
+    if ((res.data.status = 'success')) {
+      showAlert('warning', 'Logged out successfully');
+      window.setTimeout(() => {
+        location.assign('/').reload();
+      }, 1000);
+    }
   } catch (err) {
     showAlert('error', 'ERROR in Logging Out! Try Again Later..');
   }
